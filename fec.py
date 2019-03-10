@@ -27,7 +27,7 @@ print('Collegamento alla homepage')
 cookieJar = s.cookies
 
 print('Effettuo il login')
-payload = {'_58_saveLastPath': 'false', '_58_redirect' : '', '_58_doActionAfterLogin': 'false', '_58_login': 'PZZCLD74B07G793H' , '_58_pin': '7971828904', '_58_password': 'Pizzeronz7'}    
+payload = {'_58_saveLastPath': 'false', '_58_redirect' : '', '_58_doActionAfterLogin': 'false', '_58_login': '' , '_58_pin': '', '_58_password': ''}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/home?p_p_id=58&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=3&p_p_col_count=4&_58_struts_action=%2Flogin%2Flogin', data=payload)
 cookieJar = s.cookies
 
@@ -39,7 +39,7 @@ r = s.get('https://ivaservizi.agenziaentrate.gov.it/dp/api?v=' + unixTime())
 cookieJar = s.cookies
  
 print('Seleziono il tipo di incarico')
-payload = {'sceltaincarico': '04454850829-000', 'tipoincaricante' : 'incDiretto'}    
+payload = {'sceltaincarico': '', 'tipoincaricante' : 'incDiretto'}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/scelta-utenza-lavoro?p_auth='+ p_auth + '&p_p_id=SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet_javax.portlet.action=incarichiAction', data=payload)
 
 print('Aderisco al servizio')
