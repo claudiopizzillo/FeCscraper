@@ -1,17 +1,23 @@
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-import ssl
 import re
 import time
 from datetime import timedelta, datetime, tzinfo, timezone
 import sys
 import pytz
+import json
+import os
     
 def unixTime():
     dt = datetime.now(tz=pytz.utc)
     return str(int(dt.timestamp() * 1000))
 
+CF = sys.argv[1]
+PIN = sys.argv[2]
+Password  = sys.argv[3]
+Dal = sys.argv[4]
+Al = sys.argv[5]
 
 s = requests.Session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36'})
@@ -27,7 +33,7 @@ print('Collegamento alla homepage')
 cookieJar = s.cookies
 
 print('Effettuo il login')
-payload = {'_58_saveLastPath': 'false', '_58_redirect' : '', '_58_doActionAfterLogin': 'false', '_58_login': '' , '_58_pin': '', '_58_password': ''}    
+payload = {'_58_saveLastPath': 'false', '_58_redirect' : '', '_58_doActionAfterLogin': 'false', '_58_login': CF , '_58_pin': PIN, '_58_password': Password}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/home?p_p_id=58&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=3&p_p_col_count=4&_58_struts_action=%2Flogin%2Flogin', data=payload)
 cookieJar = s.cookies
 
@@ -39,7 +45,7 @@ r = s.get('https://ivaservizi.agenziaentrate.gov.it/dp/api?v=' + unixTime())
 cookieJar = s.cookies
  
 print('Seleziono il tipo di incarico')
-payload = {'sceltaincarico': '', 'tipoincaricante' : 'incDiretto'}    
+payload = {'sceltaincarico': '04454850829-000', 'tipoincaricante' : 'incDiretto'}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/scelta-utenza-lavoro?p_auth='+ p_auth + '&p_p_id=SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet_javax.portlet.action=incarichiAction', data=payload)
 
 print('Aderisco al servizio')
@@ -89,17 +95,25 @@ r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/discla
 cookieJar = s.cookies
 
 #r = s.get('https://ivaservizi.agenziaentrate.gov.it/ser/api/monitoraggio/v1/monitoraggio/fatture/?v='+unixTime()+'&idFiscCedente=&idFiscDestinatario=&idFiscEmittente=&idFiscTrasmittente=&idSdi=&perPage=10&start=1&statoFile=&tipoFattura=EMESSA')
-#r = s.get('https://ivaservizi.agenziaentrate.gov.it/ser/api/messaggistica/v1/ul/me/totale?v=' + unixTime())
 print('Scarico il json delle fatture ricevute')
-r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/fe/ricevute/dal/31122018/al/07032019?v=' + unixTime(), headers = headers)
+r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/fe/ricevute/dal/'+Dal+'/al/'+Al+'?v=' + unixTime(), headers = headers)
 
 with open('fe_ricevute.json', 'wb') as f:
     f.write(r.content)
     
 print('Inizio a scaricare le fatture')
+path = r'Ricevute' 
+if not os.path.exists(path):
+    os.makedirs(path)
 with open('fe_ricevute.json') as data_file:    
     data = json.load(data_file)
     for fattura in data['fatture']:
-        print (data['idFattura'])
-
+        fatturaFile = fattura['tipoInvio']+fattura['idFattura']
+        r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/fatture/file/'+fatturaFile+'?tipoFile=FILE_FATTURA&download=1&v='+unixTime() , headers = headers_token )
+        if r.status_code == 200:
+            d = r.headers['content-disposition']
+            fname = re.findall("filename=(.+)", d)
+            print('Downloading ' + fname[0])
+            with open(path + '/' + fname[0], 'wb') as f:
+                f.write(r.content)
 sys.exit()
