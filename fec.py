@@ -16,8 +16,9 @@ def unixTime():
 CF = sys.argv[1]
 PIN = sys.argv[2]
 Password  = sys.argv[3]
-Dal = sys.argv[4]
-Al = sys.argv[5]
+PIVA  = sys.argv[4]
+Dal = sys.argv[5]
+Al = sys.argv[6]
 
 s = requests.Session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36'})
@@ -45,7 +46,7 @@ r = s.get('https://ivaservizi.agenziaentrate.gov.it/dp/api?v=' + unixTime())
 cookieJar = s.cookies
  
 print('Seleziono il tipo di incarico')
-payload = {'sceltaincarico': '04454850829-000', 'tipoincaricante' : 'incDiretto'}    
+payload = {'sceltaincarico': PIVA + '-000', 'tipoincaricante' : 'incDiretto'}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/scelta-utenza-lavoro?p_auth='+ p_auth + '&p_p_id=SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet_javax.portlet.action=incarichiAction', data=payload)
 
 print('Aderisco al servizio')
