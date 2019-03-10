@@ -3,7 +3,7 @@ Scraper for Sogei's Fatture e Corrispettivi service.
 
 Input field in order:
 
-CF (or Entral code) of your FeC service.
+CF (or Entratel code) of your FeC service.
 PIN  of your FeC service.
 Password of your FeC service.
 Your Partita IVA
