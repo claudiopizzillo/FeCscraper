@@ -12,7 +12,7 @@ Date to
 
 Ex: fec.py PZZCLD79D79H345Y 3456789 mypassword 01234567891 01012019 01032019
 
-In the subfolder "Ricevute" you will find everthing.
+In the subfolder "Ricevute" you will find your FE and related metadati.
 
 Enjoy!
 
