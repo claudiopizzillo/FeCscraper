@@ -16,3 +16,15 @@ In the subfolder "Ricevute" you will find your FE and related metadati.
 
 Enjoy!
 
+[ITALIANO]
+
+Scarper per il servizio Fatture e Corrispettivi
+
+Dati di input in ordine:
+
+CF (o codice Entratel) di FeC.
+PIN di FeC.
+Password di FeC.
+Partita IVA
+Data dal
+Data al
