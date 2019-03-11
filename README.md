@@ -28,3 +28,5 @@ Password di FeC.
 Partita IVA
 Data dal
 Data al
+
+Nella sottocartella Ricevute troverai le tue FE e i relativi metadati.
