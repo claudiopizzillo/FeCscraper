@@ -117,4 +117,11 @@ with open('fe_ricevute.json') as data_file:
             print('Downloading ' + fname[0])
             with open(path + '/' + fname[0], 'wb') as f:
                 f.write(r.content)
+        r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/fatture/file/'+fatturaFile+'?tipoFile=FILE_METADATI&download=1&v='+unixTime() , headers = headers_token )
+        if r.status_code == 200:
+            d = r.headers['content-disposition']
+            fname = re.findall("filename=(.+)", d)
+            print('Downloading metadati per ' + fname[0])
+            with open(path + '/' + fname[0], 'wb') as f:
+                f.write(r.content)                
 sys.exit()
