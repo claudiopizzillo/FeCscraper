@@ -18,7 +18,7 @@ Enjoy!
 
 [ITALIANO]
 
-Scarper per il servizio Fatture e Corrispettivi
+Scraper per il servizio Fatture e Corrispettivi
 
 Dati di input in ordine:
 
