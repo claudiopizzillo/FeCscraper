@@ -24,7 +24,7 @@ s = requests.Session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36'})
 s.headers.update({'Connection': 'keep-alive'})
 
-cookie_obj1 = requests.cookies.create_cookie(domain='ivaservizi.agenziaentrate.gov.it',name='LFR_SESSION_STATE_20159',value='expired')
+cookie_obj1 = requests.cookies.create_cookie(domain='ivaservizi.agenziaentrate.gov.it',name='LFR_SESSION_STATE_20159',value=unixTime())
 s.cookies.set_cookie(cookie_obj1)
 cookie_obj2 = requests.cookies.create_cookie(domain='ivaservizi.agenziaentrate.gov.it',name='LFR_SESSION_STATE_10811916',value=unixTime())
 s.cookies.set_cookie(cookie_obj2)
@@ -38,6 +38,7 @@ payload = {'_58_saveLastPath': 'false', '_58_redirect' : '', '_58_doActionAfterL
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/home?p_p_id=58&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=3&p_p_col_count=4&_58_struts_action=%2Flogin%2Flogin', data=payload)
 cookieJar = s.cookies
 
+
 liferay = re.findall(r"Liferay.authToken = '.*';", r.text)[0]
 p_auth = liferay.replace("Liferay.authToken = '","")
 p_auth = p_auth.replace("';", "")
@@ -49,9 +50,11 @@ print('Seleziono il tipo di incarico')
 payload = {'sceltaincarico': PIVA + '-000', 'tipoincaricante' : 'incDiretto'}    
 r = s.post('https://ivaservizi.agenziaentrate.gov.it/portale/scelta-utenza-lavoro?p_auth='+ p_auth + '&p_p_id=SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_SceltaUtenzaLavoro_WAR_SceltaUtenzaLavoroportlet_javax.portlet.action=incarichiAction', data=payload)
 
+                           
 print('Aderisco al servizio')
 r = s.get('https://ivaservizi.agenziaentrate.gov.it/ser/api/fatture/v1/ul/me/adesione/stato/')
 cookieJar = s.cookies
+
 
 headers_token = {'x-xss-protection': '1; mode=block',
            'strict-transport-security': 'max-age=16070400; includeSubDomains',
@@ -101,6 +104,7 @@ r = s.get('https://ivaservizi.agenziaentrate.gov.it/cons/cons-services/rs/fe/ric
 
 with open('fe_ricevute.json', 'wb') as f:
     f.write(r.content)
+ 
     
 print('Inizio a scaricare le fatture')
 path = r'Ricevute' 
