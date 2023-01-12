@@ -1,6 +1,6 @@
 # FeCscraper
 Scraper for Sogei's Fatture e Corrispettivi service.
-Library to install via pip: requests and pytz
+Library to install via pip: requests, pytz, clint, tqdm.
 
 Input field in order:
 
@@ -21,7 +21,7 @@ Enjoy!
 [ITALIANO]
 
 Scraper per il servizio Fatture e Corrispettivi.
-Librerie da installare via pip: requests e pytz.
+Librerie da installare via pip: requests, pytz, clint, tqdm.
 
 Dati di input in ordine:
 
