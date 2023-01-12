@@ -10,10 +10,11 @@ Password of your FeC service.
 Your Partita IVA
 Date from
 Date to
+FOL or ENT (FiscoOnLine user or Entratel user)
 
-Ex: fec.py PZZCLD79D79H345Y 3456789 mypassword 01234567891 01012019 01032019
+Ex: fec.py PZZCLD79D79H345Y 3456789 mypassword 01234567891 01012019 01032019 FOL
 
-In the subfolder "Ricevute" you will find your FE and related metadati.
+In the subfolder "Ricevute_PIVA" you will find your FE and related metadati.
 
 Enjoy!
 
@@ -30,5 +31,6 @@ Password di FeC.
 Partita IVA
 Data dal
 Data al
+FOL o ENT (utente FiscoOnLine o utente Entratel)
 
-Nella sottocartella Ricevute troverai le tue FE e i relativi metadati.
+Nella sottocartella Ricevute_PIVA troverai le tue FE e i relativi metadati.
